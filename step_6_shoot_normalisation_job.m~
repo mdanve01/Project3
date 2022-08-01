@@ -1,0 +1,45 @@
+%-----------------------------------------------------------------------
+% Job saved on 21-Jan-2022 13:33:13 by cfg_util (rev $Rev: 7345 $)
+% spm SPM - SPM12 (7487)
+% cfg_basicio BasicIO - Unknown
+%-----------------------------------------------------------------------
+%%
+matlabbatch{1}.spm.tools.shoot.warp.images = {
+                                              {
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-301/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-304/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-306/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-309/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-310/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-312/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-313/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-316/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-318/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-319/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-401/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-406/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-407/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-410/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-411/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-414/anat/rc1rsRH-0005-00001-000176-01.nii,1'
+                                              }
+                                              {
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-301/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-304/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-306/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-309/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-310/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-312/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-313/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-316/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-318/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-319/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-401/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-406/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-407/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-410/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-411/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              '/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-414/anat/rc2rsRH-0005-00001-000176-01.nii,1'
+                                              }
+                                              }';
+%%

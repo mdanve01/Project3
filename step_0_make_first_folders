@@ -1,0 +1,23 @@
+for n in 301 304 306 309 310 312 313 316 318 401 406 407 410 411
+do
+
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data
+mkdir sub-${n}
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-${n}
+mkdir anat
+mkdir func
+mkdir DICOM
+mkdir output
+mkdir scripts
+mkdir fmap
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-${n}/fmap
+mkdir phase
+mkdir magnitude
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-${n}/output
+mkdir 1st_level
+mkdir 2nd_level
+
+done
+
+
+

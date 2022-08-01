@@ -1,0 +1,10 @@
+for n in 340 341 342
+do
+
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-${n}/func
+
+mkdir original_3d
+
+mv fRH-* /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-${n}/func/original_3d
+
+done

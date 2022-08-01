@@ -1,0 +1,30 @@
+for n in 301 304 306 309 310 312
+do
+
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/old
+mkdir sub-${n}
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/old/sub-${n}
+mkdir anat
+mkdir func
+mkdir fmap
+mkdir DICOM
+mkdir output
+mkdir scripts
+
+done
+
+
+for n in 401
+do
+
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/young
+mkdir sub-${n}
+cd /MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/young/sub-${n}
+mkdir anat
+mkdir func
+mkdir fmap
+mkdir DICOM
+mkdir output
+mkdir scripts
+
+done
