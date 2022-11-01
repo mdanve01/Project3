@@ -9,7 +9,7 @@ function step_7_normalise(subject_number);% List of open inputs
     inputs = cell(2, 1);
 
     % create the paths
-    deform = strcat('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-',subject_number,'/anat/y_rc1rsRH-0005-00001-000176-01_Template.nii');
+    deform = strcat('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-',subject_number,'/anat/y_rc1sRH-0005-00001-000176-01_Template.nii');
     epi = strcat('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-',subject_number,'/func/ufRH_',subject_number,'_EMAR.nii');
     
     inputs{1, 1} = {deform}; % Write Normalised: Deformation field - cfg_files
