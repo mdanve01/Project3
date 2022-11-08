@@ -1,18 +1,17 @@
-% select region (cer, hip or pfc)
-region = "hip";
+% select region (cer, hc, pfc, or wb for whole brain)
+region = "cer";
 
 % load up the main files if needed
 try 
     max(max(max(main_int)));
 catch
     clear all
-    addpath /usr/local/apps/psycapps/spm/spm12-r7487;
     
     % select region (cer or pfc)
-    region = "hip";
+    region = "cer";
     
     % check the bfs
-    cd('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/sub-301/output/1st_level');
+    cd('D:/Study_3/output/1st_level');
     load('SPM.mat');
     % set the window length and work out how many arbitrary units equate to 1
     % second
@@ -23,7 +22,7 @@ catch
     clear SPM
 
     % load locations where we find significance
-    cd('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/2nd_level/original');
+    cd('D:/Study_3/2nd_level/analysis/Nonpara/main');
     
     % create 3 regressors with the basis function flipped both ways
     for n = 1:length(hrf(1,:));
@@ -45,61 +44,12 @@ catch
     main_x = niftiread(strcat('main_Xage_',region,'.nii'));
     % control only young vs old
     main_c = niftiread(strcat('main_Cage_',region,'.nii'));
-    
-    % parametric interaction
-    para_int = niftiread(strcat('para_int_',region,'.nii'));
-    % young only exp vs control
-    para_y = niftiread(strcat('para_y_',region,'.nii'));
-    % old only exp vs control
-    para_o = niftiread(strcat('para_o_',region,'.nii'));
-    % experimental only young vs old
-    para_x = niftiread(strcat('para_Xage_',region,'.nii'));
-    % control only young vs old
-    para_c = niftiread(strcat('para_Cage_',region,'.nii'));
-    
+
     % all the single effects
     single_ox = niftiread(strcat('ox_',region,'.nii'));
-    single_oxp = niftiread(strcat('oxp_',region,'.nii'));
     single_oc = niftiread(strcat('oc_',region,'.nii'));
-    single_ocp = niftiread(strcat('ocp_',region,'.nii'));
     single_yx = niftiread(strcat('yx_',region,'.nii'));
-    single_yxp = niftiread(strcat('yxp_',region,'.nii'));
     single_yc = niftiread(strcat('yc_',region,'.nii'));
-    single_ycp = niftiread(strcat('ycp_',region,'.nii'));
-  
-    
-    
-    % load the con files for young x main reg
-    rxy.one = spm_vol('beta_0013.nii');
-    [rxy.a,rxy.XYZ1]=spm_read_vols(rxy.one);
-    rxy.two = spm_vol('beta_0014.nii');
-    [rxy.b,rxy.XYZ2]=spm_read_vols(rxy.two);
-    rxy.thr = spm_vol('beta_0015.nii');
-    [rxy.c,rxy.XYZ3]=spm_read_vols(rxy.thr);
-
-    % load the con files for young x para reg
-    pxy.one = spm_vol('beta_0016.nii');
-    [pxy.a,pxy.XYZ1]=spm_read_vols(pxy.one);
-    pxy.two = spm_vol('beta_0017.nii');
-    [pxy.b,pxy.XYZ2]=spm_read_vols(pxy.two);
-    pxy.thr = spm_vol('beta_0018.nii');
-    [pxy.c,pxy.XYZ3]=spm_read_vols(pxy.thr);
-
-    % load the con files for young c main reg
-    rcy.one = spm_vol('beta_0019.nii');
-    [rcy.a,rcy.XYZ1]=spm_read_vols(rcy.one);
-    rcy.two = spm_vol('beta_0020.nii');
-    [rcy.b,rcy.XYZ2]=spm_read_vols(rcy.two);
-    rcy.thr = spm_vol('beta_0021.nii');
-    [rcy.c,rcy.XYZ3]=spm_read_vols(rcy.thr);
-
-    % load the con files for young c para reg
-    pcy.one = spm_vol('beta_0022.nii');
-    [pcy.a,pcy.XYZ1]=spm_read_vols(pcy.one);
-    pcy.two = spm_vol('beta_0023.nii');
-    [pcy.b,pcy.XYZ2]=spm_read_vols(pcy.two);
-    pcy.thr = spm_vol('beta_0024.nii');
-    [pcy.c,pcy.XYZ3]=spm_read_vols(pcy.thr);
 
     % load the con files for old x main reg
     rxo.one = spm_vol('beta_0001.nii');
@@ -109,96 +59,100 @@ catch
     rxo.thr = spm_vol('beta_0003.nii');
     [rxo.c,rxo.XYZ3]=spm_read_vols(rxo.thr);
 
-    % load the con files for old x para reg
-    pxo.one = spm_vol('beta_0004.nii');
-    [pxo.a,pxo.XYZ1]=spm_read_vols(pxo.one);
-    pxo.two = spm_vol('beta_0005.nii');
-    [pxo.b,pxo.XYZ2]=spm_read_vols(pxo.two);
-    pxo.thr = spm_vol('beta_0006.nii');
-    [pxo.c,pxo.XYZ3]=spm_read_vols(pxo.thr);
-
     % load the con files for old c main reg
-    rco.one = spm_vol('beta_0007.nii');
+    rco.one = spm_vol('beta_0004.nii');
     [rco.a,rco.XYZ1]=spm_read_vols(rco.one);
-    rco.two = spm_vol('beta_0008.nii');
+    rco.two = spm_vol('beta_0005.nii');
     [rco.b,rco.XYZ2]=spm_read_vols(rco.two);
-    rco.thr = spm_vol('beta_0009.nii');
+    rco.thr = spm_vol('beta_0006.nii');
     [rco.c,rco.XYZ3]=spm_read_vols(rco.thr);
 
-    % load the con files for old c para reg
-    pco.one = spm_vol('beta_0010.nii');
-    [pco.a,pco.XYZ1]=spm_read_vols(pco.one);
-    pco.two = spm_vol('beta_0011.nii');
-    [pco.b,pco.XYZ2]=spm_read_vols(pco.two);
-    pco.thr = spm_vol('beta_0012.nii');
-    [pco.c,pco.XYZ3]=spm_read_vols(pco.thr);
-    
-    % COVARIATE
-    cd('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/2nd_level/covariate');
-
-    % interaction
-    cov_main_int = niftiread(strcat('cov_main_int_',region,'.nii'));
-    % young only exp vs control
-    cov_main_y = niftiread(strcat('cov_main_y_',region,'.nii'));
-    % old only exp vs control
-    cov_main_o = niftiread(strcat('cov_main_o_',region,'.nii'));
-    % experimental only young vs old
-    cov_main_x = niftiread(strcat('cov_main_Xage_',region,'.nii'));
-    % control only young vs old
-    cov_main_c = niftiread(strcat('cov_main_Cage_',region,'.nii'));
-    
-    % cov_parametric interaction
-    cov_para_int = niftiread(strcat('cov_para_int_',region,'.nii'));
-    % young only exp vs control
-    cov_para_y = niftiread(strcat('cov_para_y_',region,'.nii'));
-    % old only exp vs control
-    cov_para_o = niftiread(strcat('cov_para_o_',region,'.nii'));
-    % experimental only young vs old
-    cov_para_x = niftiread(strcat('cov_para_Xage_',region,'.nii'));
-    % control only young vs old
-    cov_para_c = niftiread(strcat('cov_para_Cage_',region,'.nii'));
-    
-    % all the cov_single effects
-    cov_single_ox = niftiread(strcat('ox_',region,'.nii'));
-    cov_single_oxp = niftiread(strcat('oxp_',region,'.nii'));
-    cov_single_oc = niftiread(strcat('oc_',region,'.nii'));
-    cov_single_ocp = niftiread(strcat('ocp_',region,'.nii'));
-    cov_single_yx = niftiread(strcat('yx_',region,'.nii'));
-    cov_single_yxp = niftiread(strcat('yxp_',region,'.nii'));
-    cov_single_yc = niftiread(strcat('yc_',region,'.nii'));
-    cov_single_ycp = niftiread(strcat('ycp_',region,'.nii'));
-    
     % load the con files for young x main reg
-    cov_rxy.one = spm_vol('beta_0013.nii');
-    [cov_rxy.a,cov_rxy.XYZ1]=spm_read_vols(cov_rxy.one);
-    cov_rxy.two = spm_vol('beta_0014.nii');
-    [cov_rxy.b,cov_rxy.XYZ2]=spm_read_vols(cov_rxy.two);
-    cov_rxy.thr = spm_vol('beta_0015.nii');
-    [cov_rxy.c,cov_rxy.XYZ3]=spm_read_vols(cov_rxy.thr);
-
-    % load the con files for young x para reg
-    cov_pxy.one = spm_vol('beta_0016.nii');
-    [cov_pxy.a,cov_pxy.XYZ1]=spm_read_vols(cov_pxy.one);
-    cov_pxy.two = spm_vol('beta_0017.nii');
-    [cov_pxy.b,cov_pxy.XYZ2]=spm_read_vols(cov_pxy.two);
-    cov_pxy.thr = spm_vol('beta_0018.nii');
-    [cov_pxy.c,cov_pxy.XYZ3]=spm_read_vols(cov_pxy.thr);
+    rxy.one = spm_vol('beta_0007.nii');
+    [rxy.a,rxy.XYZ1]=spm_read_vols(rxy.one);
+    rxy.two = spm_vol('beta_0008.nii');
+    [rxy.b,rxy.XYZ2]=spm_read_vols(rxy.two);
+    rxy.thr = spm_vol('beta_0009.nii');
+    [rxy.c,rxy.XYZ3]=spm_read_vols(rxy.thr);
 
     % load the con files for young c main reg
-    cov_rcy.one = spm_vol('beta_0019.nii');
-    [cov_rcy.a,cov_rcy.XYZ1]=spm_read_vols(cov_rcy.one);
-    cov_rcy.two = spm_vol('beta_0020.nii');
-    [cov_rcy.b,cov_rcy.XYZ2]=spm_read_vols(cov_rcy.two);
-    cov_rcy.thr = spm_vol('beta_0021.nii');
-    [cov_rcy.c,cov_rcy.XYZ3]=spm_read_vols(cov_rcy.thr);
+    rcy.one = spm_vol('beta_0010.nii');
+    [rcy.a,rcy.XYZ1]=spm_read_vols(rcy.one);
+    rcy.two = spm_vol('beta_0011.nii');
+    [rcy.b,rcy.XYZ2]=spm_read_vols(rcy.two);
+    rcy.thr = spm_vol('beta_0012.nii');
+    [rcy.c,rcy.XYZ3]=spm_read_vols(rcy.thr);
+
+    cd('D:/Study_3/2nd_level/analysis/Para/main');
+    
+    % parametric interaction
+    para_int = niftiread(strcat('main_int_',region,'.nii'));
+    % young only exp vs control
+    para_y = niftiread(strcat('main_y_',region,'.nii'));
+    % old only exp vs control
+    para_o = niftiread(strcat('main_o_',region,'.nii'));
+    % experimental only young vs old
+    para_x = niftiread(strcat('main_Xage_',region,'.nii'));
+    % control only young vs old
+    para_c = niftiread(strcat('main_Cage_',region,'.nii'));
+    
+    % all the single effects
+    single_oxp = niftiread(strcat('ox_',region,'.nii'));
+    single_ocp = niftiread(strcat('oc_',region,'.nii'));
+    single_yxp = niftiread(strcat('yx_',region,'.nii'));
+    single_ycp = niftiread(strcat('yc_',region,'.nii'));
+
+    % load the con files for old x para reg
+    pxo.one = spm_vol('beta_0001.nii');
+    [pxo.a,pxo.XYZ1]=spm_read_vols(pxo.one);
+    pxo.two = spm_vol('beta_0002.nii');
+    [pxo.b,pxo.XYZ2]=spm_read_vols(pxo.two);
+    pxo.thr = spm_vol('beta_0003.nii');
+    [pxo.c,pxo.XYZ3]=spm_read_vols(pxo.thr);
+
+    % load the con files for old c para reg
+    pco.one = spm_vol('beta_0004.nii');
+    [pco.a,pco.XYZ1]=spm_read_vols(pco.one);
+    pco.two = spm_vol('beta_0005.nii');
+    [pco.b,pco.XYZ2]=spm_read_vols(pco.two);
+    pco.thr = spm_vol('beta_0006.nii');
+    [pco.c,pco.XYZ3]=spm_read_vols(pco.thr);
+    
+    % load the con files for young x para reg
+    pxy.one = spm_vol('beta_0007.nii');
+    [pxy.a,pxy.XYZ1]=spm_read_vols(pxy.one);
+    pxy.two = spm_vol('beta_0008.nii');
+    [pxy.b,pxy.XYZ2]=spm_read_vols(pxy.two);
+    pxy.thr = spm_vol('beta_0009.nii');
+    [pxy.c,pxy.XYZ3]=spm_read_vols(pxy.thr);
 
     % load the con files for young c para reg
-    cov_pcy.one = spm_vol('beta_0022.nii');
-    [cov_pcy.a,cov_pcy.XYZ1]=spm_read_vols(cov_pcy.one);
-    cov_pcy.two = spm_vol('beta_0023.nii');
-    [cov_pcy.b,cov_pcy.XYZ2]=spm_read_vols(cov_pcy.two);
-    cov_pcy.thr = spm_vol('beta_0024.nii');
-    [cov_pcy.c,cov_pcy.XYZ3]=spm_read_vols(cov_pcy.thr);
+    pcy.one = spm_vol('beta_0010.nii');
+    [pcy.a,pcy.XYZ1]=spm_read_vols(pcy.one);
+    pcy.two = spm_vol('beta_0011.nii');
+    [pcy.b,pcy.XYZ2]=spm_read_vols(pcy.two);
+    pcy.thr = spm_vol('beta_0012.nii');
+    [pcy.c,pcy.XYZ3]=spm_read_vols(pcy.thr);
+
+    % COVARIATE
+    cd('D:/Study_3/2nd_level/analysis/Nonpara/cov');
+
+    % interaction
+    cov_main_int = niftiread(strcat('main_int_',region,'.nii'));
+    % young only exp vs control
+    cov_main_y = niftiread(strcat('main_y_',region,'.nii'));
+    % old only exp vs control
+    cov_main_o = niftiread(strcat('main_o_',region,'.nii'));
+    % experimental only young vs old
+    cov_main_x = niftiread(strcat('main_Xage_',region,'.nii'));
+    % control only young vs old
+    cov_main_c = niftiread(strcat('main_Cage_',region,'.nii'));
+
+    % all the cov_single effects
+    cov_single_ox = niftiread(strcat('ox_',region,'.nii'));
+    cov_single_oc = niftiread(strcat('oc_',region,'.nii'));
+    cov_single_yx = niftiread(strcat('yx_',region,'.nii'));
+    cov_single_yc = niftiread(strcat('yc_',region,'.nii'));
 
     % load the con files for old x main reg
     cov_rxo.one = spm_vol('beta_0001.nii');
@@ -207,39 +161,102 @@ catch
     [cov_rxo.b,cov_rxo.XYZ2]=spm_read_vols(cov_rxo.two);
     cov_rxo.thr = spm_vol('beta_0003.nii');
     [cov_rxo.c,cov_rxo.XYZ3]=spm_read_vols(cov_rxo.thr);
-
-    % load the con files for old x para reg
-    cov_pxo.one = spm_vol('beta_0004.nii');
-    [cov_pxo.a,cov_pxo.XYZ1]=spm_read_vols(cov_pxo.one);
-    cov_pxo.two = spm_vol('beta_0005.nii');
-    [cov_pxo.b,cov_pxo.XYZ2]=spm_read_vols(cov_pxo.two);
-    cov_pxo.thr = spm_vol('beta_0006.nii');
-    [cov_pxo.c,cov_pxo.XYZ3]=spm_read_vols(cov_pxo.thr);
-
+    
     % load the con files for old c main reg
-    cov_rco.one = spm_vol('beta_0007.nii');
+    cov_rco.one = spm_vol('beta_0004.nii');
     [cov_rco.a,cov_rco.XYZ1]=spm_read_vols(cov_rco.one);
-    cov_rco.two = spm_vol('beta_0008.nii');
+    cov_rco.two = spm_vol('beta_0005.nii');
     [cov_rco.b,cov_rco.XYZ2]=spm_read_vols(cov_rco.two);
-    cov_rco.thr = spm_vol('beta_0009.nii');
+    cov_rco.thr = spm_vol('beta_0006.nii');
     [cov_rco.c,cov_rco.XYZ3]=spm_read_vols(cov_rco.thr);
 
+    % load the con files for young x main reg
+    cov_rxy.one = spm_vol('beta_0007.nii');
+    [cov_rxy.a,cov_rxy.XYZ1]=spm_read_vols(cov_rxy.one);
+    cov_rxy.two = spm_vol('beta_0008.nii');
+    [cov_rxy.b,cov_rxy.XYZ2]=spm_read_vols(cov_rxy.two);
+    cov_rxy.thr = spm_vol('beta_0009.nii');
+    [cov_rxy.c,cov_rxy.XYZ3]=spm_read_vols(cov_rxy.thr);
+
+    % load the con files for young c main reg
+    cov_rcy.one = spm_vol('beta_0010.nii');
+    [cov_rcy.a,cov_rcy.XYZ1]=spm_read_vols(cov_rcy.one);
+    cov_rcy.two = spm_vol('beta_0011.nii');
+    [cov_rcy.b,cov_rcy.XYZ2]=spm_read_vols(cov_rcy.two);
+    cov_rcy.thr = spm_vol('beta_0012.nii');
+    [cov_rcy.c,cov_rcy.XYZ3]=spm_read_vols(cov_rcy.thr);
+  
+
+    cd('D:/Study_3/2nd_level/analysis/Para/check');
+
+    % cov_parametric interaction
+    cov_para_int = niftiread(strcat('main_int_',region,'.nii'));
+    % young only exp vs control
+    cov_para_y = niftiread(strcat('main_y_',region,'.nii'));
+    % old only exp vs control
+    cov_para_o = niftiread(strcat('main_o_',region,'.nii'));
+    % experimental only young vs old
+    cov_para_x = niftiread(strcat('main_Xage_',region,'.nii'));
+    % control only young vs old
+    cov_para_c = niftiread(strcat('main_Cage_',region,'.nii'));
+    
+    % all the cov_single effects
+    cov_single_oxp = niftiread(strcat('ox_',region,'.nii'));
+    cov_single_ocp = niftiread(strcat('oc_',region,'.nii'));
+    cov_single_yxp = niftiread(strcat('yx_',region,'.nii'));
+    cov_single_ycp = niftiread(strcat('yc_',region,'.nii'));
+
+    % load the con files for old x para reg
+    cov_pxo.one = spm_vol('beta_0001.nii');
+    [cov_pxo.a,cov_pxo.XYZ1]=spm_read_vols(cov_pxo.one);
+    cov_pxo.two = spm_vol('beta_0002.nii');
+    [cov_pxo.b,cov_pxo.XYZ2]=spm_read_vols(cov_pxo.two);
+    cov_pxo.thr = spm_vol('beta_0003.nii');
+    [cov_pxo.c,cov_pxo.XYZ3]=spm_read_vols(cov_pxo.thr);
+
     % load the con files for old c para reg
-    cov_pco.one = spm_vol('beta_0010.nii');
+    cov_pco.one = spm_vol('beta_0004.nii');
     [cov_pco.a,cov_pco.XYZ1]=spm_read_vols(cov_pco.one);
-    cov_pco.two = spm_vol('beta_0011.nii');
+    cov_pco.two = spm_vol('beta_0005.nii');
     [cov_pco.b,cov_pco.XYZ2]=spm_read_vols(cov_pco.two);
-    cov_pco.thr = spm_vol('beta_0012.nii');
+    cov_pco.thr = spm_vol('beta_0006.nii');
     [cov_pco.c,cov_pco.XYZ3]=spm_read_vols(cov_pco.thr);
+
+    % load the con files for young x para reg
+    cov_pxy.one = spm_vol('beta_0007.nii');
+    [cov_pxy.a,cov_pxy.XYZ1]=spm_read_vols(cov_pxy.one);
+    cov_pxy.two = spm_vol('beta_0008.nii');
+    [cov_pxy.b,cov_pxy.XYZ2]=spm_read_vols(cov_pxy.two);
+    cov_pxy.thr = spm_vol('beta_0009.nii');
+    [cov_pxy.c,cov_pxy.XYZ3]=spm_read_vols(cov_pxy.thr);
+
+    % load the con files for young c para reg
+    cov_pcy.one = spm_vol('beta_0010.nii');
+    [cov_pcy.a,cov_pcy.XYZ1]=spm_read_vols(cov_pcy.one);
+    cov_pcy.two = spm_vol('beta_0011.nii');
+    [cov_pcy.b,cov_pcy.XYZ2]=spm_read_vols(cov_pcy.two);
+    cov_pcy.thr = spm_vol('beta_0012.nii');
+    [cov_pcy.c,cov_pcy.XYZ3]=spm_read_vols(cov_pcy.thr);
+
+
+
+
+    % baseline
+    cd('D:/Study_3/2nd_level/baseline');
+    % load the con files for baseline values
+    base.old = spm_vol('beta_0001.nii');
+    [base.a,base.XYZ1]=spm_read_vols(base.old);
+    base.young = spm_vol('beta_0002.nii');
+    [base.b,base.XYZ2]=spm_read_vols(base.young);
 end
 
-cd('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/2nd_level/original');
+cd('D:/Study_3/2nd_level/analysis/Nonpara/main');
 
 
 % load the variables of interest
-x = 22.5;
-y = -31.5;
-z = -15;
+x = 49.5;
+y = -69;
+z = -27;
 
 % find the coordinate of interest
 clear coord
@@ -267,6 +284,27 @@ if main_c(coord) > 0;
     sig.control = 1
 else sig.control = 0;
 end
+
+if single_ox(coord) > 0;
+    sig.single_ox = 1
+else sig.single_ox = 0;
+end
+if single_oc(coord) > 0;
+    sig.single_oc = 1
+else sig.single_oc = 0;
+end
+if single_yx(coord) > 0;
+    sig.single_yx = 1
+else sig.single_yx = 0;
+end
+if single_yc(coord) > 0;
+    sig.single_yc = 1
+else sig.single_yc = 0;
+end
+
+
+cd('D:/Study_3/2nd_level/analysis/Para/main');
+
 if para_int(coord) > 0;
     sig.Pint = 1
 else sig.Pint = 0;
@@ -287,61 +325,56 @@ if para_c(coord) > 0;
     sig.Pcontrol = 1
 else sig.Pcontrol = 0;
 end
-if single_ox(coord) > 0;
-    sig.single_ox = 1
-else sig.single_ox = 0;
-end
 if single_oxp(coord) > 0;
     sig.single_oxp = 1
 else sig.single_oxp = 0;
-end
-if single_oc(coord) > 0;
-    sig.single_oc = 1
-else sig.single_oc = 0;
 end
 if single_ocp(coord) > 0;
     sig.single_ocp = 1
 else sig.single_ocp = 0;
 end
-if single_yx(coord) > 0;
-    sig.single_yx = 1
-else sig.single_yx = 0;
-end
 if single_yxp(coord) > 0;
     sig.single_yxp = 1
 else sig.single_yxp = 0;
-end
-if single_yc(coord) > 0;
-    sig.single_yc = 1
-else sig.single_yc = 0;
 end
 if single_ycp(coord) > 0;
     sig.single_ycp = 1
 else sig.single_ycp = 0;
 end
 
+
 clear output
 clear full
+clear full2
 output(:,1) = hrf(:,1) .* rxy.a(coord);
 output(:,2) = hrf(:,2) .* rxy.b(coord);
 output(:,3) = hrf(:,3) .* rxy.c(coord);
-full(:,1) = output(:,1) + output(:,2) + output(:,3);
+full(:,1) = ((output(:,1) + output(:,2) + output(:,3)) ./ base.b(coord)) .* 100;
+full2(:,1) = output(:,1) + output(:,2) + output(:,3);
 output(:,4) = hrf(:,1) .* rcy.a(coord);
 output(:,5) = hrf(:,2) .* rcy.b(coord);
 output(:,6) = hrf(:,3) .* rcy.c(coord);
-full(:,2) = output(:,4) + output(:,5) + output(:,6);
+full(:,2) = ((output(:,4) + output(:,5) + output(:,6)) ./ base.b(coord)) .* 100;
+full2(:,2) = output(:,4) + output(:,5) + output(:,6);
 output(:,7) = hrf(:,1) .* rxo.a(coord);
 output(:,8) = hrf(:,2) .* rxo.b(coord);
 output(:,9) = hrf(:,3) .* rxo.c(coord);
-full(:,3) = output(:,7) + output(:,8) + output(:,9);
+full(:,3) = ((output(:,7) + output(:,8) + output(:,9)) ./ base.a(coord)) .* 100;
+full2(:,3) = output(:,7) + output(:,8) + output(:,9);
 output(:,10) = hrf(:,1) .* rco.a(coord);
 output(:,11) = hrf(:,2) .* rco.b(coord);
 output(:,12) = hrf(:,3) .* rco.c(coord);
-full(:,4) = output(:,10) + output(:,11) + output(:,12);
+full(:,4) = ((output(:,10) + output(:,11) + output(:,12)) ./ base.a(coord)) .* 100;
+full2(:,4) = output(:,10) + output(:,11) + output(:,12);
+
+
 
 clear maxi
+clear maxi2
 maxi(1) = max(max(full)) + (abs(max(max(full))) ./ 10);
 maxi(2) = min(min(full)) - (abs(min(min(full))) ./ 10);
+maxi2(1) = max(max(full2)) + (abs(max(max(full2))) ./ 10);
+maxi2(2) = min(min(full2)) - (abs(min(min(full2))) ./ 10);
 
 clear amplitudes
 % save peak amplitudes
@@ -362,9 +395,9 @@ amplitudes(8) = amplitudes(4) ./ amplitudes(3);
 a = figure(1);
 set(gcf,'Position',[60 60 1600 800]);
 subplot(1,2,1);
-plot(full(:,1));
+plot(full(:,1),'LineWidth',3);
 hold on
-plot(full(:,3));
+plot(full(:,3),'LineWidth',3);
 xbins = 0: (2*sec): (sec*window);
 set(gca, 'xtick', xbins);
 % set the x axis to seconds, and round up to the nearest second (2 decimal
@@ -373,13 +406,13 @@ xt = get(gca, 'XTick');
 set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
 ylim([maxi(2) maxi(1)]);
 xlabel('Time (secs)');
-ylabel('Amplitude');
+ylabel('Percentage Signal Change');
 if sig.experimental == 1 & sig.old == 1;
-    legend(strcat('young exp - diff from elderly exp: ',num2str(amplitudes(5))),strcat('elderly exp - diff from elderly control: ',num2str(amplitudes(8))));
+    legend('young exp - diff from elderly exp','elderly exp - diff from elderly control');
 elseif sig.experimental == 1 & sig.old == 0;
-    legend(strcat('young exp - diff from elderly exp: ',num2str(amplitudes(5))),'elderly exp');
+    legend('young exp - diff from elderly exp','elderly exp');
 elseif sig.experimental == 0 & sig.old == 1;
-    legend('young exp',strcat('elderly exp - diff from elderly control: ',num2str(amplitudes(8))));
+    legend('young exp','elderly exp - diff from elderly control');
 elseif sig.experimental == 0 & sig.old == 0;
     legend('young exp','elderly exp');
 end
@@ -387,9 +420,9 @@ title(strcat('x = ',num2str(x),', y = ',num2str(y),', z = ',num2str(z)));
 hold off
 
 subplot(1,2,2);
-plot(full(:,2));
+plot(full(:,2),'LineWidth',3);
 hold on
-plot(full(:,4));
+plot(full(:,4),'LineWidth',3);
 xbins = 0: (2*sec): (sec*window);
 set(gca, 'xtick', xbins);
 % set the x axis to seconds, and round up to the nearest second (2 decimal
@@ -397,14 +430,70 @@ set(gca, 'xtick', xbins);
 xt = get(gca, 'XTick');                                 
 set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
 xlabel('Time (secs)');
-ylabel('Amplitude');
+ylabel('Percentage Signal Change');
 ylim([maxi(2) maxi(1)]);
 if sig.young == 1 & sig.control == 1;
-    legend(strcat('young con - diff from young exp: ',num2str(amplitudes(6))),strcat('elderly con - diff from young con: ',num2str(amplitudes(7))));
+    legend('young con - diff from young exp','elderly con - diff from young con');
 elseif sig.young == 1 & sig.control == 0;
-    legend(strcat('young con - diff from young exp: ',num2str(amplitudes(6))),'elderly con');
+    legend('young con - diff from young exp','elderly con');
 elseif sig.young == 0 & sig.control == 1;
-    legend('young con',strcat('elderly con - diff from young con: ',num2str(amplitudes(7))));
+    legend('young con','elderly con - diff from young con');
+elseif sig.young == 0 & sig.control == 0;
+    legend('young con','elderly con');
+end
+if sig.int == 1;
+    title('significant interaction');
+else
+    title('no interaction');
+end
+hold off
+
+e = figure(5);
+set(gcf,'Position',[60 60 1600 800]);
+subplot(1,2,1);
+plot(full2(:,1),'LineWidth',3);
+hold on
+plot(full2(:,3),'LineWidth',3);
+xbins = 0: (2*sec): (sec*window);
+set(gca, 'xtick', xbins);
+% set the x axis to seconds, and round up to the nearest second (2 decimal
+% places)
+xt = get(gca, 'XTick');                                 
+set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
+ylim([maxi2(2) maxi2(1)]);
+xlabel('Time (secs)');
+ylabel('Signal');
+if sig.experimental == 1 & sig.old == 1;
+    legend('young exp - diff from elderly exp','elderly exp - diff from elderly control');
+elseif sig.experimental == 1 & sig.old == 0;
+    legend('young exp - diff from elderly exp','elderly exp');
+elseif sig.experimental == 0 & sig.old == 1;
+    legend('young exp','elderly exp - diff from elderly control');
+elseif sig.experimental == 0 & sig.old == 0;
+    legend('young exp','elderly exp');
+end
+title(strcat('x = ',num2str(x),', y = ',num2str(y),', z = ',num2str(z)));
+hold off
+
+subplot(1,2,2);
+plot(full2(:,2),'LineWidth',3);
+hold on
+plot(full2(:,4),'LineWidth',3);
+xbins = 0: (2*sec): (sec*window);
+set(gca, 'xtick', xbins);
+% set the x axis to seconds, and round up to the nearest second (2 decimal
+% places)
+xt = get(gca, 'XTick');                                 
+set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
+xlabel('Time (secs)');
+ylabel('Signal');
+ylim([maxi2(2) maxi2(1)]);
+if sig.young == 1 & sig.control == 1;
+    legend('young con - diff from young exp','elderly con - diff from young con');
+elseif sig.young == 1 & sig.control == 0;
+    legend('young con - diff from young exp','elderly con');
+elseif sig.young == 0 & sig.control == 1;
+    legend('young con','elderly con - diff from young con');
 elseif sig.young == 0 & sig.control == 0;
     legend('young con','elderly con');
 end
@@ -426,19 +515,19 @@ clear fullP
 outputP(:,1) = run(:,1) .* pxy.a(coord);
 outputP(:,2) = run(:,2) .* pxy.b(coord);
 outputP(:,3) = run(:,3) .* pxy.c(coord);
-fullP(:,1) = outputP(:,1) + outputP(:,2) + outputP(:,3);
+fullP(:,1) = ((outputP(:,1) + outputP(:,2) + outputP(:,3)) ./ base.b(coord)) .* 100;
 outputP(:,4) = run(:,1) .* pcy.a(coord);
 outputP(:,5) = run(:,2) .* pcy.b(coord);
 outputP(:,6) = run(:,3) .* pcy.c(coord);
-fullP(:,2) = outputP(:,4) + outputP(:,5) + outputP(:,6);
+fullP(:,2) = ((outputP(:,4) + outputP(:,5) + outputP(:,6)) ./ base.b(coord)) .* 100;
 outputP(:,7) = run(:,1) .* pxo.a(coord);
 outputP(:,8) = run(:,2) .* pxo.b(coord);
 outputP(:,9) = run(:,3) .* pxo.c(coord);
-fullP(:,3) = outputP(:,7) + outputP(:,8) + outputP(:,9);
+fullP(:,3) = ((outputP(:,7) + outputP(:,8) + outputP(:,9)) ./ base.a(coord)) .* 100;
 outputP(:,10) = run(:,1) .* pco.a(coord);
 outputP(:,11) = run(:,2) .* pco.b(coord);
 outputP(:,12) = run(:,3) .* pco.c(coord);
-fullP(:,4) = outputP(:,10) + outputP(:,11) + outputP(:,12);
+fullP(:,4) = ((outputP(:,10) + outputP(:,11) + outputP(:,12)) ./ base.a(coord)) .* 100;
 
 clear maxiP
 maxiP(1) = max(max(fullP)) + (abs(max(max(fullP))) ./ 10);
@@ -463,9 +552,9 @@ amplitudesP(8) = amplitudesP(4) ./ amplitudesP(3);
 b = figure(2);
 set(gcf,'Position',[60 60 1600 800]);
 subplot(1,2,1);
-plot(fullP(:,1));
+plot(fullP(:,1),'LineWidth',3);
 hold on
-plot(fullP(:,3));
+plot(fullP(:,3),'LineWidth',3);
 xbins = 0: (4*sec): (sec*(window.*2));
 set(gca, 'xtick', xbins);
 % set the x axis to seconds, and round up to the nearest second (2 decimal
@@ -474,7 +563,7 @@ xt = get(gca, 'XTick');
 set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
 ylim([maxi(2) maxi(1)]);
 xlabel('Time (secs)');
-ylabel('Amplitude');
+ylabel('Percentage Signal Change');
 if sig.Pexperimental == 1 & sig.Pold == 1;
     legend(strcat('young exp - diff from elderly exp: ',num2str(amplitudesP(5))),strcat('elderly exp - diff from elderly control: ',num2str(amplitudesP(8))));
 elseif sig.Pexperimental == 1 & sig.Pold == 0;
@@ -488,9 +577,9 @@ title(strcat('x = ',num2str(x),', y = ',num2str(y),', z = ',num2str(z)));
 hold off
 
 subplot(1,2,2);
-plot(fullP(:,2));
+plot(fullP(:,2),'LineWidth',3);
 hold on
-plot(fullP(:,4));
+plot(fullP(:,4),'LineWidth',3);
 xbins = 0: (4*sec): (sec*(window.*2));
 set(gca, 'xtick', xbins);
 % set the x axis to seconds, and round up to the nearest second (2 decimal
@@ -498,7 +587,7 @@ set(gca, 'xtick', xbins);
 xt = get(gca, 'XTick');                                 
 set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
 xlabel('Time (secs)');
-ylabel('Amplitude');
+ylabel('Percentage Signal Change');
 ylim([maxi(2) maxi(1)]);
 if sig.Pyoung == 1 & sig.Pcontrol == 1;
     legend(strcat('young con - diff from young exp: ',num2str(amplitudesP(6))),strcat('elderly con - diff from young con: ',num2str(amplitudesP(7))));
@@ -527,7 +616,7 @@ amplitudesP = array2table(amplitudesP, ...
 
 
 % re run with covariate version
-cd('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/2nd_level/covariate');
+cd('D:/Study_3/2nd_level/analysis/Nonpara/cov');
 
 
 % check if contrasts are cov_significant
@@ -552,6 +641,27 @@ if cov_main_c(coord) > 0;
     cov_sig.control = 1
 else cov_sig.control = 0;
 end
+
+if cov_single_ox(coord) > 0;
+    sig.cov_single_ox = 1
+else sig.cov_single_ox = 0;
+end
+if cov_single_oc(coord) > 0;
+    sig.cov_single_oc = 1
+else sig.cov_single_oc = 0;
+end
+if cov_single_yx(coord) > 0;
+    sig.cov_single_yx = 1
+else sig.cov_single_yx = 0;
+end
+if cov_single_yc(coord) > 0;
+    sig.cov_single_yc = 1
+else sig.cov_single_yc = 0;
+end
+
+
+cd('D:/Study_3/2nd_level/analysis/Para/check');
+
 if cov_para_int(coord) > 0;
     cov_sig.Pint = 1
 else cov_sig.Pint = 0;
@@ -572,33 +682,17 @@ if cov_para_c(coord) > 0;
     cov_sig.cov_pcontrol = 1
 else cov_sig.cov_pcontrol = 0;
 end
-if cov_single_ox(coord) > 0;
-    sig.cov_single_ox = 1
-else sig.cov_single_ox = 0;
-end
 if cov_single_oxp(coord) > 0;
     sig.cov_single_oxp = 1
 else sig.cov_single_oxp = 0;
-end
-if cov_single_oc(coord) > 0;
-    sig.cov_single_oc = 1
-else sig.cov_single_oc = 0;
 end
 if cov_single_ocp(coord) > 0;
     sig.cov_single_ocp = 1
 else sig.cov_single_ocp = 0;
 end
-if cov_single_yx(coord) > 0;
-    sig.cov_single_yx = 1
-else sig.cov_single_yx = 0;
-end
 if cov_single_yxp(coord) > 0;
     sig.cov_single_yxp = 1
 else sig.cov_single_yxp = 0;
-end
-if cov_single_yc(coord) > 0;
-    sig.cov_single_yc = 1
-else sig.cov_single_yc = 0;
 end
 if cov_single_ycp(coord) > 0;
     sig.cov_single_ycp = 1
@@ -611,19 +705,19 @@ clear cov_full
 cov_output(:,1) = hrf(:,1) .* cov_rxy.a(coord);
 cov_output(:,2) = hrf(:,2) .* cov_rxy.b(coord);
 cov_output(:,3) = hrf(:,3) .* cov_rxy.c(coord);
-cov_full(:,1) = cov_output(:,1) + cov_output(:,2) + cov_output(:,3);
+cov_full(:,1) = ((cov_output(:,1) + cov_output(:,2) + cov_output(:,3)) ./ base.b(coord)) .* 100;
 cov_output(:,4) = hrf(:,1) .* cov_rcy.a(coord);
 cov_output(:,5) = hrf(:,2) .* cov_rcy.b(coord);
 cov_output(:,6) = hrf(:,3) .* cov_rcy.c(coord);
-cov_full(:,2) = cov_output(:,4) + cov_output(:,5) + cov_output(:,6);
+cov_full(:,2) = ((cov_output(:,4) + cov_output(:,5) + cov_output(:,6)) ./ base.b(coord)) .* 100;
 cov_output(:,7) = hrf(:,1) .* cov_rxo.a(coord);
 cov_output(:,8) = hrf(:,2) .* cov_rxo.b(coord);
 cov_output(:,9) = hrf(:,3) .* cov_rxo.c(coord);
-cov_full(:,3) = cov_output(:,7) + cov_output(:,8) + cov_output(:,9);
+cov_full(:,3) = ((cov_output(:,7) + cov_output(:,8) + cov_output(:,9)) ./ base.a(coord)) .* 100;
 cov_output(:,10) = hrf(:,1) .* cov_rco.a(coord);
 cov_output(:,11) = hrf(:,2) .* cov_rco.b(coord);
 cov_output(:,12) = hrf(:,3) .* cov_rco.c(coord);
-cov_full(:,4) = cov_output(:,10) + cov_output(:,11) + cov_output(:,12);
+cov_full(:,4) = ((cov_output(:,10) + cov_output(:,11) + cov_output(:,12)) ./ base.a(coord)) .* 100;
 
 clear maxi
 maxi(1) = max(max(cov_full)) + (abs(max(max(cov_full))) ./ 10);
@@ -648,9 +742,9 @@ cov_amplitudes(8) = cov_amplitudes(4) ./ cov_amplitudes(3);
 c = figure(3);
 set(gcf,'Position',[60 60 1600 800]);
 subplot(1,2,1);
-plot(cov_full(:,1));
+plot(cov_full(:,1),'LineWidth',3);
 hold on
-plot(cov_full(:,3));
+plot(cov_full(:,3),'LineWidth',3);
 xbins = 0: (2*sec): (sec*window);
 set(gca, 'xtick', xbins);
 % set the x axis to seconds, and round up to the nearest second (2 decimal
@@ -659,7 +753,7 @@ xt = get(gca, 'XTick');
 set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
 ylim([maxi(2) maxi(1)]);
 xlabel('Time (secs)');
-ylabel('Amplitude');
+ylabel('Percentage Signal Change');
 if cov_sig.experimental == 1 & cov_sig.old == 1;
     legend(strcat('young exp - diff from elderly exp: ',num2str(cov_amplitudes(5))),strcat('elderly exp - diff from elderly control: ',num2str(cov_amplitudes(8))));
 elseif cov_sig.experimental == 1 & cov_sig.old == 0;
@@ -673,9 +767,9 @@ title(strcat('x = ',num2str(x),', y = ',num2str(y),', z = ',num2str(z)));
 hold off
 
 subplot(1,2,2);
-plot(cov_full(:,2));
+plot(cov_full(:,2),'LineWidth',3);
 hold on
-plot(cov_full(:,4));
+plot(cov_full(:,4),'LineWidth',3);
 xbins = 0: (2*sec): (sec*window);
 set(gca, 'xtick', xbins);
 % set the x axis to seconds, and round up to the nearest second (2 decimal
@@ -683,7 +777,7 @@ set(gca, 'xtick', xbins);
 xt = get(gca, 'XTick');                                 
 set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
 xlabel('Time (secs)');
-ylabel('Amplitude');
+ylabel('Percentage Signal Change');
 ylim([maxi(2) maxi(1)]);
 if cov_sig.young == 1 & cov_sig.control == 1;
     legend(strcat('young con - diff from young exp: ',num2str(cov_amplitudes(6))),strcat('elderly con - diff from young con: ',num2str(cov_amplitudes(7))));
@@ -712,19 +806,19 @@ clear cov_fullP
 cov_outputP(:,1) = run(:,1) .* cov_pxy.a(coord);
 cov_outputP(:,2) = run(:,2) .* cov_pxy.b(coord);
 cov_outputP(:,3) = run(:,3) .* cov_pxy.c(coord);
-cov_fullP(:,1) = cov_outputP(:,1) + cov_outputP(:,2) + cov_outputP(:,3);
+cov_fullP(:,1) = ((cov_outputP(:,1) + cov_outputP(:,2) + cov_outputP(:,3)) ./ base.b(coord)) .* 100;
 cov_outputP(:,4) = run(:,1) .* cov_pcy.a(coord);
 cov_outputP(:,5) = run(:,2) .* cov_pcy.b(coord);
 cov_outputP(:,6) = run(:,3) .* cov_pcy.c(coord);
-cov_fullP(:,2) = cov_outputP(:,4) + cov_outputP(:,5) + cov_outputP(:,6);
+cov_fullP(:,2) = ((cov_outputP(:,4) + cov_outputP(:,5) + cov_outputP(:,6)) ./ base.b(coord)) .* 100;
 cov_outputP(:,7) = run(:,1) .* cov_pxo.a(coord);
 cov_outputP(:,8) = run(:,2) .* cov_pxo.b(coord);
 cov_outputP(:,9) = run(:,3) .* cov_pxo.c(coord);
-cov_fullP(:,3) = cov_outputP(:,7) + cov_outputP(:,8) + cov_outputP(:,9);
+cov_fullP(:,3) = ((cov_outputP(:,7) + cov_outputP(:,8) + cov_outputP(:,9)) ./ base.a(coord)) .* 100;
 cov_outputP(:,10) = run(:,1) .* cov_pco.a(coord);
 cov_outputP(:,11) = run(:,2) .* cov_pco.b(coord);
 cov_outputP(:,12) = run(:,3) .* cov_pco.c(coord);
-cov_fullP(:,4) = cov_outputP(:,10) + cov_outputP(:,11) + cov_outputP(:,12);
+cov_fullP(:,4) = ((cov_outputP(:,10) + cov_outputP(:,11) + cov_outputP(:,12)) ./ base.a(coord)) .* 100;
 
 clear maxiP
 maxiP(1) = max(max(cov_fullP)) + (abs(max(max(cov_fullP))) ./ 10);
@@ -749,9 +843,9 @@ cov_amplitudesP(8) = cov_amplitudesP(4) ./ cov_amplitudesP(3);
 d = figure(4);
 set(gcf,'Position',[60 60 1600 800]);
 subplot(1,2,1);
-plot(cov_fullP(:,1));
+plot(cov_fullP(:,1),'LineWidth',3);
 hold on
-plot(cov_fullP(:,3));
+plot(cov_fullP(:,3),'LineWidth',3);
 xbins = 0: (4*sec): (sec*(window.*2));
 set(gca, 'xtick', xbins);
 % set the x axis to seconds, and round up to the nearest second (2 decimal
@@ -760,7 +854,7 @@ xt = get(gca, 'XTick');
 set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
 ylim([maxi(2) maxi(1)]);
 xlabel('Time (secs)');
-ylabel('Amplitude');
+ylabel('Percentage Signal Change');
 if cov_sig.Pexperimental == 1 & cov_sig.Pold == 1;
     legend(strcat('young exp - diff from elderly exp: ',num2str(cov_amplitudesP(5))),strcat('elderly exp - diff from elderly control: ',num2str(cov_amplitudesP(8))));
 elseif cov_sig.Pexperimental == 1 & cov_sig.Pold == 0;
@@ -774,9 +868,9 @@ title(strcat('x = ',num2str(x),', y = ',num2str(y),', z = ',num2str(z)));
 hold off
 
 subplot(1,2,2);
-plot(cov_fullP(:,2));
+plot(cov_fullP(:,2),'LineWidth',3);
 hold on
-plot(cov_fullP(:,4));
+plot(cov_fullP(:,4),'LineWidth',3);
 xbins = 0: (4*sec): (sec*(window.*2));
 set(gca, 'xtick', xbins);
 % set the x axis to seconds, and round up to the nearest second (2 decimal
@@ -784,7 +878,7 @@ set(gca, 'xtick', xbins);
 xt = get(gca, 'XTick');                                 
 set(gca, 'XTick', xt, 'XTickLabel', round(xt/sec,2));
 xlabel('Time (secs)');
-ylabel('Amplitude');
+ylabel('Percentage Signal Change');
 ylim([maxi(2) maxi(1)]);
 if cov_sig.Pyoung == 1 & cov_sig.cov_pcontrol == 1;
     legend(strcat('young con - diff from young exp: ',num2str(cov_amplitudesP(6))),strcat('elderly con - diff from young con: ',num2str(cov_amplitudesP(7))));
@@ -908,12 +1002,13 @@ beta_table = array2table(beta_t, ...
 
 
 % save the relevant
-cd('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/2nd_level/outputs');
+cd('D:/Study_3/2nd_level/outputs');
 mkdir(strcat('coordinate_',num2str(x),'_',num2str(y),'_',num2str(z)));
-cd(strcat('/MRIWork/MRIWork06/nr/matthew_danvers/Study_3/eye_movements_and_rules/data/2nd_level/outputs/coordinate_',num2str(x),'_',num2str(y),'_',num2str(z)));
+cd(strcat('D:/Study_3/2nd_level/outputs/coordinate_',num2str(x),'_',num2str(y),'_',num2str(z)));
 save effects_table effects_table
 save beta_table beta_table
 saveas(a,'original_effect','jpg');
 saveas(b,'original_parametric','jpg');
 saveas(c,'covariate_effect','jpg');
 saveas(d,'covariate_parametric','jpg');
+saveas(e,'original_effect_original_signal','jpg');
