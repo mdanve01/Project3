@@ -18,6 +18,9 @@ for n = 1:length(sub);
     % remove pactise trials
     data(find(data(:,1) < 9),:) = [];
 
+    % remove missed trials
+    data(find(data(:,5) == 0),:) = [];
+
     % count the number of experimental errors
     error_file(n,1) = sub(n);
     error_file(n,2) = length(find(data(:,5) == 1 & data(:,8) == 1));
@@ -38,6 +41,7 @@ for n = 1:length(sub);
     counter.matchall2 = 0;
     counter.unmatchall2 = 0;
     pre = 0;
+    post = 0;
     total_len = 0;
     
 
@@ -61,13 +65,23 @@ for n = 1:length(sub);
             counter.pre = counter.pre + 0;
             counter.post = counter.post + length(find(rule.exp.(name)(:,5) == 1));
             pre = pre + 0;
+            % check rep errors post first
+            clear err
+            err = rule.exp.(name)(find(rule.exp.(name)(:,5) == 1),:);
+            post = post + length(err(:,1)) - length(unique(err(:,7)));
         elseif pos > 1;
             % now look at the number of pre and post errors assuming not
             % right first time
             counter.pre = counter.pre + length(find(rule.exp.(name)(1:pos - 1,5) == 1));
             counter.post = counter.post + length(find(rule.exp.(name)(pos + 1:length(rule.exp.(name)(:,1)),5) == 1));
-            % now count the number ofrepeated errors pre the first correct
+            % now count the number of repeated errors pre the first correct
             pre = pre + (pos - 1) - length(unique(rule.exp.(name)(1:pos - 1,7)));
+            clear precheck
+            precheck = (pos - 1) - length(unique(rule.exp.(name)(1:pos - 1,7)));
+            % check rep errors post first
+            clear err
+            err = rule.exp.(name)(find(rule.exp.(name)(:,5) == 1),:);
+            post = post + length(err(:,1)) - length(unique(err(:,7))) - precheck;
         else        
             % cannot find a first correct then all are pre correct
             counter.pre = counter.pre + length(find(rule.exp.(name)(:,5) == 1));
@@ -84,7 +98,7 @@ for n = 1:length(sub);
         temp2 = temp(find(temp(:,5) == 1),:);
         % check for if there are any error trials
         try 
-            % arbitrary operation but throws up an error is empty array
+            % arbitrary operation but throws up an error if is empty array
             temp2(1);
             % then count the number of error trials and subtract the number
             % of unique targets, which leaves us with the number of
@@ -178,7 +192,7 @@ for n = 1:length(sub);
     end
     error_file(n,11) = total_len;
     error_file(n,12) = pre;
-    error_file(n,13) = total_len - pre;
+    error_file(n,13) = post;
     error_file(n,14) = rt.mean;
     error_file(n,15) = rt.median;
 end
@@ -189,4 +203,3 @@ cd('C:/Users/mdanv/OneDrive/PhD_Stuff/Experiment_3/design_2_base/testing/Analysi
 
 save errors errors
 
-        
