@@ -89,7 +89,7 @@ for n = 1:length(sub);
             pre = pre + length(find(rule.exp.(name)(:,5) == 1)) - length(unique(rule.exp.(name)(1:pos - 1,7)));
         end
 
-        % Now look up how often an error was repeated within a rule
+        % Now look up how often an error was repeated within a rule.
         clear temp
         clear temp2
         % load the rule
