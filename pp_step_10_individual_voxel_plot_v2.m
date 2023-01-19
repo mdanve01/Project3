@@ -993,7 +993,7 @@ beta_t(10,4) = abs(beta_t(7,4)) ./ (abs(beta_t(7,4)) + abs(beta_t(8,4)) + abs(be
 beta_t(11,4) = abs(beta_t(8,4)) ./ (abs(beta_t(7,4)) + abs(beta_t(8,4)) + abs(beta_t(9,4)));
 beta_t(12,4) = abs(beta_t(9,4)) ./ (abs(beta_t(7,4)) + abs(beta_t(8,4)) + abs(beta_t(9,4)));
 
-% save as a table
+% save as a table.
 beta_table = array2table(beta_t, ...
     'VariableNames',{'YoungX','YoungC','ElderlyX','ElderlyC'}, ...
     'RowNames',{'Canonical_reg','Temp_Derv_reg','Disp_Derv_reg','Can_prop','TD_prop','DD_prop','Canonical_para','Temp_Derv_para','Disp_Derv_para','CanP_propr','TDP_prop','DDP_prop'});
