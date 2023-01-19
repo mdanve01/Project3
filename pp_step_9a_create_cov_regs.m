@@ -14,7 +14,7 @@ gender.young_orig = gender.young;
 num_trials.old_orig = num_trials.old;
 num_trials.young_orig = num_trials.young;
 
-for n = 1:11;
+for n = 1:5;
     iq.old_orig = [iq.old_orig iq.old];
     gender.old_orig = [gender.old_orig gender.old];
     num_trials.old_orig = [num_trials.old_orig num_trials.old];
