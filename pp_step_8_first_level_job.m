@@ -196,4 +196,7 @@ matlabbatch{3}.spm.stats.con.consess{35}.tcon.sessrep = 'none';
 matlabbatch{3}.spm.stats.con.consess{36}.tcon.name = 'con36';
 matlabbatch{3}.spm.stats.con.consess{36}.tcon.weights = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
 matlabbatch{3}.spm.stats.con.consess{36}.tcon.sessrep = 'none';
+matlabbatch{3}.spm.stats.con.consess{37}.tcon.name = 'con43';
+matlabbatch{3}.spm.stats.con.consess{37}.tcon.weights = [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1];
+matlabbatch{3}.spm.stats.con.consess{37}.tcon.sessrep = 'none';
 matlabbatch{3}.spm.stats.con.delete = 0;
